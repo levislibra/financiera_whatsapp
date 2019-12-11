@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_financiera_whatsapp_financiera_whatsapp,financiera_whatsapp.financiera_whatsapp,model_financiera_whatsapp_financiera_whatsapp,,1,0,0,0
