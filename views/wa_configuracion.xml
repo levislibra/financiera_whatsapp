@@ -19,10 +19,10 @@
         <field name="arch" type="xml">
             <form string="Configuracion" create="false" delete="false">
                 <header>
-                  <button name="actualizar_saldo_informes" string="Conectar Whatsapp" type="object" />
+                  <button name="test_connection" string="Test conexión Whatsapp" type="object" />
                 </header>
                 <sheet>
-                  <group>
+                    <group>
                       <group>
                         <field name="company_id" groups="base.group_erp_manager"/>
                         <field name="name"/>
@@ -34,6 +34,28 @@
                       <group string="Información conexión">
                         <field name="account_sid"/>
                         <field name="auth_token" password="True"/>
+                      </group>
+                      <group string="Prueba de conexión">
+                        <field name="number_send"/>
+                        <field name="number_received_test"/>
+                        <field name="body_send_test"/>
+                      </group>
+                    </group>
+                    <group>
+                      <group string="Mensaje cobro preventivo">
+                        <field name="preventivo_body"/>
+                        <field name="preventivo_when_send">
+                          <tree>
+                            <field name="date"/>
+                            <field name="send_type"/>
+                          </tree>
+                          <form>
+                            <group>
+                              <field name="send_type" required="1"/>
+                              <field name="date"/>
+                            </group>
+                          </form>
+                        </field>
                       </group>
                       <group>
                       </group>
