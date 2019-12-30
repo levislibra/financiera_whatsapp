@@ -18,7 +18,7 @@ class FinancieraWhatsappConfig(models.Model):
 	# Aviso preventivo
 	preventivo_body = fields.Text('Mensaje')
 	preventivo_when_send = fields.One2many('financiera.wa.send.when', 'preventivo_when_send_id', 'Cuando enviar?')
-	# preventivo_who_send = fields.One2many('financiera.wa.send.who', 'preventivo_who_send_id', 'A quien enviar?')
+	preventivo_who_send = fields.One2many('financiera.wa.send.who', 'preventivo_who_send_id', 'A quien enviar?')
 
 	@api.one
 	def test_connection(self):
@@ -37,13 +37,15 @@ class FinancieraWhatsappSendWhen(models.Model):
 	date = fields.Integer('Dia/Dias')
 	company_id = fields.Many2one('res.company', 'Empresa', default=lambda self: self.env['res.company']._company_default_get('financiera.whatsapp.config'))
 
-# class FinancieraWhatsappSendWho(models.Model):
-# 	_name = 'financiera.wa.send.who'
+class FinancieraWhatsappSendWho(models.Model):
+	_name = 'financiera.wa.send.who'
 
-# 	preventivo_who_send_id = fields.Many2one('financiera.wa.config')
-# 	send_type = fields.Selection([('dia_especifico', 'Dia especifico'), ('dia_antes_vencimiento', 'Dias antes del vencimiento'), ('dia_despues_vencimiento', 'Dias despues del vencimiento')], 'Tipo de envio')
-# 	date = fields.Integer('Dia/Dias')
-# 	company_id = fields.Many2one('res.company', 'Empresa', default=lambda self: self.env['res.company']._company_default_get('financiera.whatsapp.config'))
+	preventivo_who_send_id = fields.Many2one('financiera.wa.config')
+	send_who = fields.Selection([
+		('cuota_activa', 'Cliente con cuota activa'),
+		('cuota_preventiva', 'Cliente con cuota en preventiva')],
+		'Tipo de envio')
+	company_id = fields.Many2one('res.company', 'Empresa', default=lambda self: self.env['res.company']._company_default_get('financiera.whatsapp.config'))
 
 
 class ExtendsResCompany(models.Model):

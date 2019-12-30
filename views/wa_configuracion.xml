@@ -56,6 +56,16 @@
                             </group>
                           </form>
                         </field>
+                        <field name="preventivo_who_send">
+                          <tree>
+                            <field name="send_who"/>
+                          </tree>
+                          <form>
+                            <group>
+                              <field name="send_who" required="1"/>
+                            </group>
+                          </form>
+                        </field>
                       </group>
                       <group>
                       </group>
