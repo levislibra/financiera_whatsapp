@@ -34,40 +34,11 @@
                       <group string="Información conexión">
                         <field name="account_sid"/>
                         <field name="auth_token" password="True"/>
+                        <field name="number_send"/>
                       </group>
                       <group string="Prueba de conexión">
-                        <field name="number_send"/>
                         <field name="number_received_test"/>
                         <field name="body_send_test"/>
-                      </group>
-                    </group>
-                    <group>
-                      <group string="Mensaje cobro preventivo">
-                        <field name="preventivo_body"/>
-                        <field name="preventivo_when_send">
-                          <tree>
-                            <field name="date"/>
-                            <field name="send_type"/>
-                          </tree>
-                          <form>
-                            <group>
-                              <field name="send_type" required="1"/>
-                              <field name="date"/>
-                            </group>
-                          </form>
-                        </field>
-                        <field name="preventivo_who_send">
-                          <tree>
-                            <field name="send_who"/>
-                          </tree>
-                          <form>
-                            <group>
-                              <field name="send_who" required="1"/>
-                            </group>
-                          </form>
-                        </field>
-                      </group>
-                      <group>
                       </group>
                     </group>
                 </sheet>
@@ -83,16 +54,103 @@
     </record>
 
 
+    <!-- Financiera Whatsapp message -->
+
+    <record model="ir.ui.view" id="financiera_wa_message_tree">
+      <field name="name">financiera.wa.message.tree</field>
+      <field name="model">financiera.wa.message</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="financiera_wa_message_form" model="ir.ui.view">
+      <field name="name">financiera.wa.message.form</field>
+      <field name="model">financiera.wa.message</field>
+      <field name="arch" type="xml">
+        <form string="Mensaje Whatsapp">
+          <header>
+            <button name="aprobar" string="Aprobar" states="borrador" type="object" />
+            <button name="borrador" string="Enviar a borrador" states="aprobado,rechazado" type="object" />
+            <button name="rechazar" string="Rechazar" states="borrador,aprobado" type="object" />
+            <field name="state" widget='statusbar'/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="company_id" groups="base.group_erp_manager"/>
+                <field name="name"/>
+                <field name="active"/>
+              </group>
+              <group>
+                <field name="when_send">
+                  <tree>
+                    <field name="date"/>
+                    <field name="send_type"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <field name="send_type" required="1"/>
+                      <field name="date"/>
+                    </group>
+                  </form>
+                </field>
+              </group>
+            </group>
+            <group>
+              <group>
+                <field name="body"/>
+                <field name="body_word_replace" readonly="1"/>
+              </group>
+              <group>
+                <field name="who_send">
+                  <tree>
+                    <field name="send_who"/>
+                    <field name="n"/>
+                    <field name="m"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <field name="send_who" required="1"/>
+                      <field name="n"/>
+                      <field name="m"/>
+                    </group>
+                  </form>
+                </field>
+              </group>
+            </group>
+            <groups>
+              <field name="message_ids" readonly="1"/>
+            </groups>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="financiera_wa_message_action">
+      <field name="name">Mensajes</field>
+      <field name="res_model">financiera.wa.message</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="financiera_wa_message_tree"/>
+    </record>
+
+
     <!-- Top menu item -->
     
     <menuitem name="Whatsapp Notificaciones" id="menu_wa" web_icon="financiera_whatsapp,static/description/icon.png"/>
     <!-- groups="financiera_wa.manager" -->
     
     <!-- menu categories -->
+
+    <menuitem name="Mensajes" id="menu_message" sequence="10" parent="menu_wa"/>
+    <menuitem name="Mensajes" id="menu_message_action" sequence="1" parent="menu_message" action="financiera_wa_message_action"/>
+
     
     <menuitem name="Configuracion" id="menu_config" sequence="100" parent="menu_wa"/>
-
-    <menuitem name="Configuracion" id="menu_rol_config_action" sequence="1" parent="menu_config" action="financiera_wa_config_action"/>
+    <menuitem name="Configuracion" id="menu_config_action" sequence="1" parent="menu_config" action="financiera_wa_config_action"/>
 
 
 
