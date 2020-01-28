@@ -8,7 +8,7 @@
       <field name="model">res.company</field>
       <field name="inherit_id" ref="financiera_prestamos.company_form_inherited"/>
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='configuracion_id']" position='after'>
+        <xpath expr="//field[@name='id_prestamo_venta']" position='after'>
           <separator string="Modulo Whatsapp Notificaiones" colspan="2"/>
           <field name="wa_configuracion_id"/>
         </xpath>
