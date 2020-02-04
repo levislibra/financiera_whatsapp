@@ -30,7 +30,7 @@
         # 'security/ir.model.access.csv',
         'views/wa_configuracion.xml',
         'views/extends_res_company.xml',
-        # 'views/templates.xml',
+        'data/ir_cron.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
