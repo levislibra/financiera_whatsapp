@@ -90,20 +90,20 @@
       <field name="model">financiera.wa.message</field>
       <field name="arch" type="xml">
         <form string="Mensaje Whatsapp">
-          <header>
+          <!-- <header>
             <field name="status" widget='statusbar'/>
-          </header>
+          </header> -->
           <sheet>
             <group>
               <group>
                 <field name="company_id" groups="base.group_erp_manager"/>
                 <field name="partner_id"/>
                 <field name="config_id"/>
-              </group>
-              <group>
                 <field name="from_"/>
                 <field name="to"/>
                 <field name="body"/>
+              </group>
+              <group>
                 <field name="error_code"/>
                 <field name="error_message"/>
                 <field name="status"/>

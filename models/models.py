@@ -69,11 +69,13 @@ class FinancieraWhatsappConfig(models.Model):
 						cuota_id = cuota_obj.browse(cr, uid, _id)
 						mensaje = wa_configuracion_id.preventivo_mensaje
 						mensaje.replace('{cliente_nombre}', cuota_id.partner_id.name)
+						print("Cliente: ", cuota_id.partner_id.name)
+						print("to: ", cuota_id.partner_id.mobile)
 						wa_message_values = {
 							'partner_id': cuota_id.partner_id.id,
 							'config_id': wa_configuracion_id.id,
 							'from_': wa_configuracion_id.number_send,
-							'to': cuota_id.partner_id.mobile or " ",
+							'to': cuota_id.partner_id.mobile or "1234567891",
 							'body': mensaje,
 						}
 						message_id = self.env['financiera.wa.message'].create(wa_message_values)
@@ -81,7 +83,7 @@ class FinancieraWhatsappConfig(models.Model):
 						message_id.send()
 
 
-
+WHATSAPP_PREFIX = '+549'
 
 class FinancieraWhatsappMessage(models.Model):
 	_name = 'financiera.wa.message'
@@ -101,10 +103,11 @@ class FinancieraWhatsappMessage(models.Model):
 	@api.one
 	def send(self):
 		client = Client(self.config_id.account_sid, self.config_id.auth_token)
+		print("to send: ", self.to)
 		message = client.messages.create(
 			body=self.body,
 			from_='whatsapp:'+self.from_,
-			to='whatsapp:+549'+self.to
+			to='whatsapp:'+WHATSAPP_PREFIX+self.to
 		)
 		self.error_code = message.error_code
 		self.error_message = message.error_message
