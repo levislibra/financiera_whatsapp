@@ -50,6 +50,37 @@
                         <field name="preventivo_segundo_envio_dias_antes" attrs="{'invisible': ['|', ('preventivo_activar', '=', False), ('preventivo_activar_segundo_envio', '=', False)]}"/>
                       </group>
                       <group>
+                        <field name="preventivo_var_1"/>
+                        <field name="preventivo_var_2"/>
+                        <field name="preventivo_var_3"/>
+                      </group>
+                    </group>
+                    <group string="Mensaje de cuota vencida">
+                      <group>
+                        <field name="cuota_vencida_activar"/>
+                        <field name="cuota_vencida_mensaje" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
+                        <field name="cuota_vencida_dias_despues" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
+                        <field name="cuota_vencida_activar_segundo_envio" attrs="{'invisible': [('cuota_vencida_activar', '=', False)]}"/>
+                        <field name="cuota_vencida_segundo_envio_dias_despues" attrs="{'invisible': ['|', ('cuota_vencida_activar', '=', False), ('cuota_vencida_activar_segundo_envio', '=', False)]}"/>
+                      </group>
+                      <group>
+                        <field name="cuota_vencida_var_1"/>
+                        <field name="cuota_vencida_var_2"/>
+                        <field name="cuota_vencida_var_3"/>
+                      </group>
+                    </group>
+                    <group string="Mensaje notificacion deuda">
+                      <group>
+                        <field name="notificacion_deuda_activar"/>
+                        <field name="notificacion_deuda_mensaje" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
+                        <field name="notificacion_deuda_dia" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
+                        <field name="notificacion_deuda_activar_segundo_envio" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)]}"/>
+                        <field name="notificacion_deuda_dia_segundo_envio" attrs="{'invisible': ['|', ('notificacion_deuda_activar', '=', False), ('notificacion_deuda_activar_segundo_envio', '=', False)]}"/>
+                      </group>
+                      <group>
+                        <field name="notificacion_deuda_var_1"/>
+                        <field name="notificacion_deuda_var_2"/>
+                        <field name="notificacion_deuda_var_3"/>
                       </group>
                     </group>
                 </sheet>
@@ -75,6 +106,7 @@
           <field name="partner_id"/>
           <field name="from_"/>
           <field name="to"/>
+          <field name="tipo"/>
           <field name="error_code"/>
           <field name="error_message"/>
           <field name="status"/>
@@ -90,9 +122,6 @@
       <field name="model">financiera.wa.message</field>
       <field name="arch" type="xml">
         <form string="Mensaje Whatsapp">
-          <!-- <header>
-            <field name="status" widget='statusbar'/>
-          </header> -->
           <sheet>
             <group>
               <group>
