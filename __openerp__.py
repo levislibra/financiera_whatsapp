@@ -29,6 +29,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/wa_configuracion.xml',
+        'views/wa_message.xml',
         'views/extends_res_company.xml',
         'data/ir_cron.xml',
     ],

@@ -1,0 +1,68 @@
+<openerp>
+  <data>
+
+    <!-- Financiera Whatsapp message -->
+
+    <record model="ir.ui.view" id="financiera_wa_message_tree">
+      <field name="name">financiera.wa.message.tree</field>
+      <field name="model">financiera.wa.message</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="partner_id"/>
+          <field name="from_"/>
+          <field name="to"/>
+          <field name="tipo"/>
+          <field name="error_code"/>
+          <field name="error_message"/>
+          <field name="status"/>
+          <field name="price"/>
+          <field name="price_unit"/>
+          <field name="company_id" groups="base.group_erp_manager"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="financiera_wa_message_form" model="ir.ui.view">
+      <field name="name">financiera.wa.message.form</field>
+      <field name="model">financiera.wa.message</field>
+      <field name="arch" type="xml">
+        <form string="Mensaje Whatsapp">
+          <sheet>
+            <group>
+              <group>
+                <field name="company_id" groups="base.group_erp_manager"/>
+                <field name="partner_id"/>
+                <field name="config_id"/>
+                <field name="from_"/>
+                <field name="to"/>
+                <field name="body"/>
+              </group>
+              <group>
+                <field name="error_code"/>
+                <field name="error_message"/>
+                <field name="status"/>
+                <field name="price"/>
+                <field name="price_unit"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="financiera_wa_message_action">
+      <field name="name">Mensajes</field>
+      <field name="res_model">financiera.wa.message</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="financiera_wa_message_tree"/>
+    </record>
+
+
+    <!-- menu categories -->
+
+    <menuitem name="Mensajes" id="menu_message" sequence="10" parent="menu_wa"/>
+    <menuitem name="Mensajes" id="menu_message_action" sequence="1" parent="menu_message" action="financiera_wa_message_action"/>
+
+    
+  </data>
+</openerp>
