@@ -9,6 +9,7 @@
       <field name="arch" type="xml">
         <tree create="false" delete="false">
           <field name="name"/>
+          <field name="company_id" groups="base.group_erp_manager"/>
         </tree>
       </field>
     </record>
@@ -98,8 +99,7 @@
 
     <!-- Top menu item -->
     
-    <menuitem name="Whatsapp Notificaciones" id="menu_wa" web_icon="financiera_whatsapp,static/description/icon.png"/>
-    <!-- groups="financiera_wa.manager" -->
+    <menuitem name="Whatsapp Notificaciones" id="menu_wa" web_icon="financiera_whatsapp,static/description/icon.png" groups="financiera_whatsapp.manager"/>
     
     <!-- menu categories -->
     

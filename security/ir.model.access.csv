@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_financiera_whatsapp_financiera_whatsapp,financiera_whatsapp.financiera_whatsapp,model_financiera_whatsapp_financiera_whatsapp,,1,0,0,0
+manager_financiera_wa_config,financiera.wa.config,model_financiera_wa_config,financiera_whatsapp.manager,1,1,1,1
+user_financiera_wa_config,financiera.wa.config,model_financiera_wa_config,financiera_whatsapp.user,1,0,0,0
+
+manager_financiera_wa_message,financiera.wa.message,model_financiera_wa_message,financiera_whatsapp.manager,1,1,1,0
+user_financiera_wa_message,financiera.wa.message,model_financiera_wa_message,financiera_whatsapp.user,1,0,1,0
