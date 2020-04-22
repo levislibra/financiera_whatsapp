@@ -84,6 +84,9 @@ class FinancieraWhatsappConfig(models.Model):
 		('cantidad_cuotas', 'Cantidad de cuotas')],
 		'Variable 3')
 
+	# Notificacion Codigo Terminos y condiciones
+	tc_codigo = fields.Boolean("Activar mensaje con codigo de terminos y condiciones.")
+	tc_mensaje = fields.Text('Mensaje', help='Usar {{1}} como codigo.')
 
 	@api.one
 	def test_connection(self):
@@ -93,123 +96,6 @@ class FinancieraWhatsappConfig(models.Model):
 			from_='whatsapp:'+self.number_send,
 			to='whatsapp:'+self.number_received_test
 		)
-
-	def replace_values(self, mensaje, tipo_mensaje, cuota_id, partner_id, var1, var2, var3):
-		if var1 != False:
-			mensaje = mensaje.replace("{{1}}", var1)
-		if var2 != False:
-			mensaje = mensaje.replace("""{{2}}""", var2)
-		if var3 != False:
-			mensaje = mensaje.replace('{{3}}', var3)
-		if tipo_mensaje == 'preventivo':
-			mensaje = mensaje.replace("nombre_cliente", partner_id.name)
-			mensaje = mensaje.replace("monto_cuota", str(cuota_id.saldo))
-			date = datetime.strptime(cuota_id.fecha_vencimiento, '%Y-%m-%d')
-			date = date.strftime('%d-%m-%Y')
-			mensaje = mensaje.replace("fecha_vencimiento", date)
-		elif tipo_mensaje == 'cuota_vencida':
-			mensaje = mensaje.replace("nombre_cliente", partner_id.name)
-			mensaje = mensaje.replace("monto_cuota", str(cuota_id.saldo))
-			date = datetime.strptime(cuota_id.fecha_vencimiento, '%Y-%m-%d')
-			date = date.strftime('%d-%m-%Y')
-			mensaje = mensaje.replace("fecha_vencimiento", date)
-		elif tipo_mensaje == 'notificacion_deuda':
-			mensaje = mensaje.replace("nombre_cliente", partner_id.name)
-			mensaje = mensaje.replace("monto_deuda", str(partner_id.saldo_cuotas_vencidas))
-			mensaje = mensaje.replace("cantidad_cuotas", str(partner_id.cantidad_cuotas_vencidas))
-		return mensaje
-
-	@api.model
-	def _cron_enviar_mensajes_whatsapp(self):
-		cr = self.env.cr
-		uid = self.env.uid
-		fecha_actual = datetime.now()
-		company_obj = self.pool.get('res.company')
-		comapny_ids = company_obj.search(cr, uid, [])
-		for _id in comapny_ids:
-			company_id = company_obj.browse(cr, uid, _id)
-			if len(company_id.wa_configuracion_id) > 0:
-				wa_configuracion_id = company_id.wa_configuracion_id
-				# Mensajes preventivos
-				if wa_configuracion_id.preventivo_activar:
-					primer_fecha = fecha_actual + relativedelta.relativedelta(days=wa_configuracion_id.preventivo_dias_antes)
-					segunda_fecha = None
-					if wa_configuracion_id.preventivo_activar_segundo_envio:
-						segunda_fecha = fecha_actual + relativedelta.relativedelta(days=wa_configuracion_id.preventivo_segundo_envio_dias_antes)
-					cuota_obj = self.pool.get('financiera.prestamo.cuota')
-					cuota_ids = cuota_obj.search(cr, uid, [
-						('company_id', '=', company_id.id),
-						('state', '=', 'activa'),
-						'|', ('fecha_vencimiento', '=', primer_fecha),
-						('fecha_vencimiento', '=', segunda_fecha)
-						])
-					for _id in cuota_ids:
-						cuota_id = cuota_obj.browse(cr, uid, _id)
-						mensaje = wa_configuracion_id.preventivo_mensaje
-						mensaje = wa_configuracion_id.replace_values(mensaje, 'preventivo', cuota_id, cuota_id.partner_id,\
-							wa_configuracion_id.preventivo_var_1, wa_configuracion_id.preventivo_var_2, wa_configuracion_id.preventivo_var_3)
-						wa_message_values = {
-							'partner_id': cuota_id.partner_id.id,
-							'config_id': wa_configuracion_id.id,
-							'from_': wa_configuracion_id.number_send,
-							'to': cuota_id.partner_id.mobile or WHATSAPP_NUMERO_NEUTRO,
-							'body': mensaje,
-							'tipo': 'Preventivo',
-						}
-						message_id = self.env['financiera.wa.message'].create(wa_message_values)
-						message_id.send()
-				# Mensaje cuota vencida
-				if wa_configuracion_id.cuota_vencida_activar:
-					primer_fecha = fecha_actual - relativedelta.relativedelta(days=wa_configuracion_id.cuota_vencida_dias_despues)
-					segunda_fecha = None
-					if wa_configuracion_id.cuota_vencida_activar_segundo_envio:
-						segunda_fecha = fecha_actual - relativedelta.relativedelta(days=wa_configuracion_id.cuota_vencida_segundo_envio_dias_despues)
-					cuota_obj = self.pool.get('financiera.prestamo.cuota')
-					cuota_ids = cuota_obj.search(cr, uid, [
-						('company_id', '=', company_id.id),
-						('state', '=', 'activa'),
-						'|', ('fecha_vencimiento', '=', primer_fecha),
-						('fecha_vencimiento', '=', segunda_fecha)
-						])
-					for _id in cuota_ids:
-						cuota_id = cuota_obj.browse(cr, uid, _id)
-						mensaje = wa_configuracion_id.cuota_vencida_mensaje
-						mensaje = wa_configuracion_id.replace_values(mensaje, 'cuota_vencida', cuota_id, cuota_id.partner_id,\
-							wa_configuracion_id.cuota_vencida_var_1, wa_configuracion_id.cuota_vencida_var_2, wa_configuracion_id.cuota_vencida_var_3)
-						wa_message_values = {
-							'partner_id': cuota_id.partner_id.id,
-							'config_id': wa_configuracion_id.id,
-							'from_': wa_configuracion_id.number_send,
-							'to': cuota_id.partner_id.mobile or WHATSAPP_NUMERO_NEUTRO,
-							'body': mensaje,
-							'tipo': 'Cuota vencida',
-						}
-						message_id = self.env['financiera.wa.message'].create(wa_message_values)
-						message_id.send()
-				# Mensaje notificacion deuda
-				if wa_configuracion_id.notificacion_deuda_activar:
-					if fecha_actual.day == wa_configuracion_id.notificacion_deuda_dia\
-					or fecha_actual.day == wa_configuracion_id.notificacion_deuda_dia_segundo_envio:
-						partner_obj = self.pool.get('res.partner')
-						partner_ids = partner_obj.search(cr, uid, [
-							('company_id', '=', company_id.id),
-							('cuota_ids.fecha_vencimiento', '<', fecha_actual),
-							('cuota_ids.state', '=', 'activa')])
-						for _id in partner_ids:
-							partner_id = partner_obj.browse(cr, uid, _id)
-							mensaje = wa_configuracion_id.notificacion_deuda_mensaje
-							mensaje = wa_configuracion_id.replace_values(mensaje, 'notificacion_deuda', None, partner_id,\
-								wa_configuracion_id.notificacion_deuda_var_1, wa_configuracion_id.notificacion_deuda_var_2, wa_configuracion_id.notificacion_deuda_var_3)
-							wa_message_values = {
-								'partner_id': cuota_id.partner_id.id,
-								'config_id': wa_configuracion_id.id,
-								'from_': wa_configuracion_id.number_send,
-								'to': cuota_id.partner_id.mobile,
-								'body': mensaje,
-								'tipo': 'Cuota vencida',
-							}
-							message_id = self.env['financiera.wa.message'].create(wa_message_values)
-							message_id.send()
 
 class ExtendsResCompany(models.Model):
 	_inherit = 'res.company'

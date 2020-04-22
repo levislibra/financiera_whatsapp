@@ -11,7 +11,7 @@
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
             <field name="nextcall" >2019-01-01 04:00:00</field>
-            <field name="model">financiera.wa.config</field>
+            <field name="model">financiera.wa.message</field>
             <field name="function">_cron_enviar_mensajes_whatsapp</field>
         </record>
 

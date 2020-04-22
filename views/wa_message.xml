@@ -7,7 +7,7 @@
       <field name="name">financiera.wa.message.tree</field>
       <field name="model">financiera.wa.message</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree create='false' delete='false' edit='false'>
           <field name="create_date" string="Fecha"/>
           <field name="partner_id"/>
           <field name="from_"/>

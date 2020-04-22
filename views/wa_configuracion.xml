@@ -23,67 +23,80 @@
                   <button name="test_connection" string="Test conexión Whatsapp" type="object" />
                 </header>
                 <sheet>
+                  <group>
                     <group>
-                      <group>
-                        <field name="company_id" groups="base.group_erp_manager"/>
-                        <field name="name"/>
-                      </group>
-                      <group>
-                      </group>
+                      <field name="company_id" groups="base.group_erp_manager"/>
+                      <field name="name"/>
+                      <separate string="Información conexión" colspan="2"/>
+                      <field name="account_sid"/>
+                      <field name="auth_token" password="True"/>
+                      <field name="number_send"/>
                     </group>
-                    <group>
-                      <group string="Información conexión">
-                        <field name="account_sid"/>
-                        <field name="auth_token" password="True"/>
-                        <field name="number_send"/>
-                      </group>
-                      <group string="Prueba de conexión">
-                        <field name="number_received_test"/>
-                        <field name="body_send_test"/>
-                      </group>
+                    <group string="Prueba de conexión">
+                      <field name="number_received_test"/>
+                      <field name="body_send_test"/>
                     </group>
-                    <group string="Mensaje preventivo">
+                  </group>
+                  <notebook>
+                    <page string="Mensaje preventivo">
                       <group>
-                        <field name="preventivo_activar"/>
-                        <field name="preventivo_mensaje" attrs="{'invisible': [('preventivo_activar', '=', False)], 'required': [('preventivo_activar', '=', True)]}"/>
-                        <field name="preventivo_dias_antes" attrs="{'invisible': [('preventivo_activar', '=', False)], 'required': [('preventivo_activar', '=', True)]}"/>
-                        <field name="preventivo_activar_segundo_envio" attrs="{'invisible': [('preventivo_activar', '=', False)]}"/>
-                        <field name="preventivo_segundo_envio_dias_antes" attrs="{'invisible': ['|', ('preventivo_activar', '=', False), ('preventivo_activar_segundo_envio', '=', False)]}"/>
+                        <group>
+                          <field name="preventivo_activar"/>
+                          <field name="preventivo_mensaje" attrs="{'invisible': [('preventivo_activar', '=', False)], 'required': [('preventivo_activar', '=', True)]}"/>
+                          <field name="preventivo_dias_antes" attrs="{'invisible': [('preventivo_activar', '=', False)], 'required': [('preventivo_activar', '=', True)]}"/>
+                          <field name="preventivo_activar_segundo_envio" attrs="{'invisible': [('preventivo_activar', '=', False)]}"/>
+                          <field name="preventivo_segundo_envio_dias_antes" attrs="{'invisible': ['|', ('preventivo_activar', '=', False), ('preventivo_activar_segundo_envio', '=', False)]}"/>
+                        </group>
+                        <group>
+                          <field name="preventivo_var_1"/>
+                          <field name="preventivo_var_2"/>
+                          <field name="preventivo_var_3"/>
+                        </group>
                       </group>
+                    </page>
+                    <page string="Mensaje de cuota vencida">
                       <group>
-                        <field name="preventivo_var_1"/>
-                        <field name="preventivo_var_2"/>
-                        <field name="preventivo_var_3"/>
+                        <group>
+                          <field name="cuota_vencida_activar"/>
+                          <field name="cuota_vencida_mensaje" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
+                          <field name="cuota_vencida_dias_despues" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
+                          <field name="cuota_vencida_activar_segundo_envio" attrs="{'invisible': [('cuota_vencida_activar', '=', False)]}"/>
+                          <field name="cuota_vencida_segundo_envio_dias_despues" attrs="{'invisible': ['|', ('cuota_vencida_activar', '=', False), ('cuota_vencida_activar_segundo_envio', '=', False)]}"/>
+                        </group>
+                        <group>
+                          <field name="cuota_vencida_var_1"/>
+                          <field name="cuota_vencida_var_2"/>
+                          <field name="cuota_vencida_var_3"/>
+                        </group>
                       </group>
-                    </group>
-                    <group string="Mensaje de cuota vencida">
+                    </page>
+                    <page string="Mensaje notificacion deuda">
                       <group>
-                        <field name="cuota_vencida_activar"/>
-                        <field name="cuota_vencida_mensaje" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
-                        <field name="cuota_vencida_dias_despues" attrs="{'invisible': [('cuota_vencida_activar', '=', False)], 'required': [('cuota_vencida_activar', '=', True)]}"/>
-                        <field name="cuota_vencida_activar_segundo_envio" attrs="{'invisible': [('cuota_vencida_activar', '=', False)]}"/>
-                        <field name="cuota_vencida_segundo_envio_dias_despues" attrs="{'invisible': ['|', ('cuota_vencida_activar', '=', False), ('cuota_vencida_activar_segundo_envio', '=', False)]}"/>
+                        <group>
+                          <field name="notificacion_deuda_activar"/>
+                          <field name="notificacion_deuda_mensaje" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
+                          <field name="notificacion_deuda_dia" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
+                          <field name="notificacion_deuda_activar_segundo_envio" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)]}"/>
+                          <field name="notificacion_deuda_dia_segundo_envio" attrs="{'invisible': ['|', ('notificacion_deuda_activar', '=', False), ('notificacion_deuda_activar_segundo_envio', '=', False)]}"/>
+                        </group>
+                        <group>
+                          <field name="notificacion_deuda_var_1"/>
+                          <field name="notificacion_deuda_var_2"/>
+                          <field name="notificacion_deuda_var_3"/>
+                        </group>
                       </group>
+                    </page>
+                    <page string="Mensaje del codigo de Terminos y Condiciones">
                       <group>
-                        <field name="cuota_vencida_var_1"/>
-                        <field name="cuota_vencida_var_2"/>
-                        <field name="cuota_vencida_var_3"/>
+                        <group>
+                          <field name="tc_codigo"/>
+                          <field name="tc_mensaje" attrs="{'invisible': [('tc_codigo', '=', False)], 'required': [('tc_codigo', '=', True)]}"/>
+                        </group>
+                        <group>
+                        </group>
                       </group>
-                    </group>
-                    <group string="Mensaje notificacion deuda">
-                      <group>
-                        <field name="notificacion_deuda_activar"/>
-                        <field name="notificacion_deuda_mensaje" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
-                        <field name="notificacion_deuda_dia" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)], 'required': [('notificacion_deuda_activar', '=', True)]}"/>
-                        <field name="notificacion_deuda_activar_segundo_envio" attrs="{'invisible': [('notificacion_deuda_activar', '=', False)]}"/>
-                        <field name="notificacion_deuda_dia_segundo_envio" attrs="{'invisible': ['|', ('notificacion_deuda_activar', '=', False), ('notificacion_deuda_activar_segundo_envio', '=', False)]}"/>
-                      </group>
-                      <group>
-                        <field name="notificacion_deuda_var_1"/>
-                        <field name="notificacion_deuda_var_2"/>
-                        <field name="notificacion_deuda_var_3"/>
-                      </group>
-                    </group>
+                    </page>
+                  </notebook>
                 </sheet>
             </form>
         </field>
