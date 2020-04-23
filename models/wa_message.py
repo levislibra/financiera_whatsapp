@@ -196,22 +196,22 @@ class ExtendsMailMail(models.Model):
 		sub_action = context.get('sub_action')
 		active_id = context.get('active_id')
 		super(ExtendsMailMail, self).send(auto_commit=False, raise_exception=False)
-		# if active_model == 'financiera.prestamo' and sub_action == 'tc_sent':
-		# 	cr = self.env.cr
-		# 	uid = self.env.uid
-		# 	prestamo_obj = self.pool.get('financiera.prestamo')
-		# 	prestamo_id = prestamo_obj.browse(cr, uid, active_id)
-		# 	wa_configuracion_id = prestamo_id.company_id.wa_configuracion_id
-		# 	if wa_configuracion_id.tc_codigo and prestamo_id.partner_id in self.recipient_ids:
-		# 		wa_message_values = {
-		# 			'partner_id': prestamo_id.partner_id.id,
-		# 			'config_id': wa_configuracion_id.id,
-		# 			'from_': wa_configuracion_id.number_send,
-		# 			'to': prestamo_id.partner_id.mobile,
-		# 			'tipo': 'Codigo TC',
-		# 		}
-		# 		message_id = self.env['financiera.wa.message'].create(wa_message_values)
-		# 		message_id.set_message_code(wa_configuracion_id.tc_mensaje, prestamo_id.email_tc_code)
-		# 		message_id.send()
-		# 		prestamo_id.email_tc_code_sent = True
+		if active_model == 'financiera.prestamo' and sub_action == 'tc_sent':
+			cr = self.env.cr
+			uid = self.env.uid
+			prestamo_obj = self.pool.get('financiera.prestamo')
+			prestamo_id = prestamo_obj.browse(cr, uid, active_id)
+			wa_configuracion_id = prestamo_id.company_id.wa_configuracion_id
+			if wa_configuracion_id.tc_codigo and prestamo_id.partner_id in self.recipient_ids:
+				wa_message_values = {
+					'partner_id': prestamo_id.partner_id.id,
+					'config_id': wa_configuracion_id.id,
+					'from_': wa_configuracion_id.number_send,
+					'to': prestamo_id.partner_id.mobile,
+					'tipo': 'Codigo TC',
+				}
+				message_id = self.env['financiera.wa.message'].create(wa_message_values)
+				message_id.set_message_code(wa_configuracion_id.tc_mensaje, prestamo_id.email_tc_code)
+				message_id.send()
+				prestamo_id.email_tc_code_sent = True
 
