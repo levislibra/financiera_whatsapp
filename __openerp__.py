@@ -33,6 +33,7 @@
         'views/wa_configuracion.xml',
         'views/wa_message.xml',
         'views/extends_res_company.xml',
+				'views/extends_res_partner.xml',
         'data/ir_cron.xml',
     ],
     # only loaded in demonstration mode

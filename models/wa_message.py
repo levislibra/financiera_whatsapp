@@ -145,7 +145,7 @@ class FinancieraWhatsappMessage(models.Model):
 							'tipo': 'Cuota vencida',
 						}
 						message_id = self.env['financiera.wa.message'].create(wa_message_values)
-						wa_configuracion_id.set_message(
+						message_id.set_message(
 							wa_configuracion_id.cuota_vencida_mensaje,
 							'cuota_vencida',
 							cuota_id,
@@ -166,15 +166,14 @@ class FinancieraWhatsappMessage(models.Model):
 						for _id in partner_ids:
 							partner_id = partner_obj.browse(cr, uid, _id)
 							wa_message_values = {
-								'partner_id': cuota_id.partner_id.id,
+								'partner_id': partner_id.id,
 								'config_id': wa_configuracion_id.id,
 								'from_': wa_configuracion_id.number_send,
-								'to': cuota_id.partner_id.mobile,
-								# 'body': mensaje,
-								'tipo': 'Cuota vencida',
+								'to': partner_id.mobile,
+								'tipo': 'Deuda',
 							}
 							message_id = self.env['financiera.wa.message'].create(wa_message_values)
-							wa_configuracion_id.set_message(
+							message_id.set_message(
 								wa_configuracion_id.notificacion_deuda_mensaje,
 								'notificacion_deuda',
 								None,

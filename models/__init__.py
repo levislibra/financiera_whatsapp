@@ -2,3 +2,4 @@
 
 from . import wa_configuracion
 from . import wa_message
+from . import extends_res_partner

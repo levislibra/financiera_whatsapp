@@ -1,0 +1,20 @@
+<openerp>
+	<data>
+
+		<!-- Vista Form Partner -->
+
+		<record id="app_partner_form_inherited"  model="ir.ui.view">
+			<field name="name">Partner Extension form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='mobile']" position='after'>
+					<label for="button_open_whatsapp"/>
+					<button name="button_open_whatsapp"
+						type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>
