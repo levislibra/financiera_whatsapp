@@ -6,15 +6,14 @@
 		<record id="partner_form_inherited_whatsapp"  model="ir.ui.view">
 			<field name="name">Partner Extension form</field>
 			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="inherit_id" ref="financiera_base.partner_form_inherited"/>
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='mobile']" position='replace'>
-					<label for="mobile" string="Celular"/>
 					<div>
 						<field name="mobile" readonly="1" class="oe_inline"/>
 						<button name="button_open_whatsapp" style="background-color: transparent;padding-top: 0px;"
 							type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
-						</div>
+					</div>
 				</xpath>
 			</field>
 		</record>
@@ -25,7 +24,7 @@
 			<field name="inherit_id" ref="financiera_cobranza_mora.cobranza_mora_cliente_form"/>
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='mobile']" position='replace'>
-					<label for="mobile" string="Nro"/>
+					<label for="mobile" string="Celular"/>
 					<div>
 						<field name="mobile" readonly="1" class="oe_inline"/>
 						<button name="button_open_whatsapp" style="background-color: transparent;padding-top: 0px;"
@@ -41,7 +40,7 @@
 			<field name="inherit_id" ref="financiera_cobranza_mora.cobranza_mora_cliente_sesion_form"/>
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='mobile']" position='replace'>
-					<label for="mobile" string="Nro"/>
+					<label for="mobile" string="Celular"/>
 					<div>
 						<field name="mobile" readonly="1" class="oe_inline"/>
 						<button name="button_open_whatsapp" style="background-color: transparent;padding-top: 0px;"
