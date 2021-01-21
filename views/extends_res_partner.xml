@@ -10,7 +10,7 @@
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='mobile']" position='replace'>
 					<div>
-						<field name="mobile" readonly="1" class="oe_inline"/>
+						<field name="mobile" class="oe_inline"/>
 						<button name="button_open_whatsapp" style="background-color: transparent;padding-top: 0px;"
 							type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
 					</div>
