@@ -1,0 +1,22 @@
+<openerp>
+	<data>
+
+		<record id="extends_prestamo_form_whatsapp"  model="ir.ui.view">
+			<field name="name">Prestamo Extension form whatsapp</field>
+			<field name="model">financiera.prestamo</field>
+			<field name="inherit_id" ref="financiera_prestamos.financiera_prestamo_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='capacidad_pago_mensual_disponible']" position='before'>
+					<label for="partner_mobile" string="Celular"/>
+					<div>
+						<field name="partner_mobile" readonly="1" class="oe_inline"/>
+						<button name="button_open_whatsapp" style="background-color: transparent;padding-top: 0px;"
+						type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
+					</div>
+				</xpath>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

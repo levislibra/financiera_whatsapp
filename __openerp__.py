@@ -34,6 +34,7 @@
         'views/wa_message.xml',
         'views/extends_res_company.xml',
 				'views/extends_res_partner.xml',
+				'views/extends_financiera_prestamo.xml',
         'data/ir_cron.xml',
     ],
     # only loaded in demonstration mode
