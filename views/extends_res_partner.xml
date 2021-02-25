@@ -50,5 +50,35 @@
 			</field>
 		</record>
 
+		<!-- Vista Contactos tree -->
+		
+		<record id="contacts_tree_inherited"  model="ir.ui.view">
+      <field name="name">Extension Contactos Tree</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_tree"/>
+      <field name="arch" type="xml">        
+				<xpath expr="//field[@name='phone']" position="after">
+					<field name="mobile"/>
+          <button name="button_open_whatsapp" style="font-size:22px !important;background-color:transparent;padding-top:0px;"
+						type="object" class="oe_inline" icon="fa-whatsapp"/>
+        </xpath>
+      </field>
+    </record>
+
+		<!-- Vista Prestamos -> Clientes tree -->
+		
+		<record id="prestamo_cliente_tree_inherited"  model="ir.ui.view">
+      <field name="name">Extension Contactos Tree</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="financiera_prestamos.financiera_cliente_tree"/>
+      <field name="arch" type="xml">        
+        <xpath expr="//field[@name='mobile']" position="after">
+          <button name="button_open_whatsapp" style="font-size:32px;background-color:transparent;padding-top:0px;"
+						type="object" class="oe_inline" icon="fa-whatsapp"/>
+        </xpath>
+      </field>
+    </record>
+
+
 	</data>
 </openerp>
