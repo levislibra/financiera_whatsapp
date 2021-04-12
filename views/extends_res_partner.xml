@@ -15,6 +15,11 @@
 							type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
 					</div>
 				</xpath>
+				<xpath expr="//field[@name='movil']" position="replace">
+					<field name="movil"/>
+          <button name="button_open_whatsapp" style="font-size:24px;background-color:transparen;padding-top:0px;"
+						type="object" class="oe_inline" icon="fa-whatsapp"/>
+        </xpath>
 			</field>
 		</record>
 
