@@ -52,6 +52,11 @@
 							type="object" class="oe_inline" icon="financiera_whatsapp/static/description/whatsapp.png"/>
 						</div>
 				</xpath>
+				<xpath expr="//field[@name='movil']" position="replace">
+					<field name="movil"/>
+          <button name="button_open_whatsapp" style="font-size:24px;background-color:transparen;padding-top:0px;"
+						type="object" class="oe_inline" icon="fa-whatsapp"/>
+        </xpath>
 			</field>
 		</record>
 
@@ -63,6 +68,21 @@
       <field name="inherit_id" ref="base.view_partner_tree"/>
       <field name="arch" type="xml">        
 				<xpath expr="//field[@name='phone']" position="replace">
+					<field name="mobile"/>
+          <button name="button_open_whatsapp" style="font-size:22px;background-color:transparent;padding-top:0px;"
+						type="object" class="oe_inline" icon="fa-whatsapp"/>
+        </xpath>
+      </field>
+    </record>
+
+		<!-- Vista Deudores tree -->
+		
+		<record id="deudores_tree_inherited"  model="ir.ui.view">
+      <field name="name">Extension Deudores Tree</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="financiera_cobranza_mora.cobranza_mora_cliente_tree"/>
+      <field name="arch" type="xml">        
+				<xpath expr="//field[@name='name']" position="after">
 					<field name="mobile"/>
           <button name="button_open_whatsapp" style="font-size:22px;background-color:transparent;padding-top:0px;"
 						type="object" class="oe_inline" icon="fa-whatsapp"/>
