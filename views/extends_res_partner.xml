@@ -23,7 +23,7 @@
 			</field>
 		</record>
 
-		<record id="cobranza_mora_cliente_sesion_form_inherited_whatsapp"  model="ir.ui.view">
+		<!-- <record id="cobranza_mora_cliente_sesion_form_inherited_whatsapp"  model="ir.ui.view">
 			<field name="name">Partner Extension form</field>
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="financiera_cobranza_mora.cobranza_mora_cliente_sesion_form"/>
@@ -42,7 +42,7 @@
 						type="object" class="oe_inline" icon="fa-whatsapp"/>
         </xpath>
 			</field>
-		</record>
+		</record> -->
 
 		<!-- Vista Contactos tree -->
 		
