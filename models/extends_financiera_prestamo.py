@@ -6,8 +6,6 @@ class ExtendsFinancieraPrestamo(models.Model):
 	_name = 'financiera.prestamo'
 	_inherit = 'financiera.prestamo'
 
-	partner_mobile = fields.Char(related='partner_id.mobile')
-
 	@api.multi
 	def button_open_whatsapp(self):
 		return {
